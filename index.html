@@ -3,10 +3,27 @@
 	<head>
 		<title>gistspike</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
-		<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
-    	<script type="text/javascript" src="script.js"></script>
 	</head>
 	<body>
-	<button id="sign-in-button">Sign In</button>
-	<button id="sign-out-button">Sign Out</button>
+	<div id="signed-out">
+        <button id="sign-in-button">Sign In</button>	
+	</div>
+	<div id="signed-in">
+	   <button id="sign-out-button">Sign Out</button>
+	   <hr>
+	   Gist Name:<br>
+	   <input type="text" name="gist-name"><br>
+	   Gist Value:<br>
+	   <textarea name="gist-value" rows="20" cols="50"></textarea><br>
+	   
+	   <button id="create-button">Create</button>
+	   <button id="read-button">Read</button>
+	   <button id="update-button">Update</button>
+	   <button id="delete-button">Delete</button>
+    	   
+	   <p>Last Status: <span id="output">null</span></p>
+	</div>
+	
+	<script type="text/javascript" src="jquery-2.0.0b2.js"></script>
+	<script type="text/javascript" src="script.js"></script>
 </html>

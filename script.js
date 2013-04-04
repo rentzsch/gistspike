@@ -2,19 +2,16 @@ var cookieName = 'gistSpike.oauth';
 
 $(document).ready(function(){
     if (readCookie(cookieName)) {
-        console.log('signed in');
-        $('#sign-in-button').hide();
-    } else {
-        console.log('signed out');
-        $('#sign-out-button').hide();
+        // signed in
+        $('#signed-out').hide();
+        $('#signed-in').show();
     }
     
     var oauthCode = window.location.search.match(/code=(.+)/);
     if (oauthCode) {
-        console.log('oauth code detected, storing '+oauthCode[1]);
         createCookie(cookieName, oauthCode[1]);
         // Remove 'code=' from the url:
-        //window.location = window.location.origin + window.location.pathname;
+        window.location = window.location.origin + window.location.pathname;
     }
     
 	$('#sign-in-button').click(function(){
@@ -25,7 +22,91 @@ $(document).ready(function(){
 		eraseCookie(cookieName);
 		window.location.reload();
 	});
+    
+	$('#create-button').click(function(){
+		console.log(
+		  'creating gist "'
+		  +gistName()
+		  +'" with value "'
+		  +gistValue()
+		  +'"');
+		  
+        $.ajax({
+            type: 'POST',
+            url: 'https://api.github.com/gists',
+            headers: {
+                'Accept': 'application/vnd.github.raw',
+                'Authorization': 'token '+readCookie(cookieName),
+            },
+            //contentType: 'application/json',
+            data: {
+                'description': 'pergist-spike-'+gistName(),
+                'public': false,
+                'files': {
+                    'data.txt': {
+                        'content': gistValue()
+                    },
+                }
+            },
+            //--
+            dataType: 'json',
+            //cache: false, // not for POST
+            complete: function(jqXHR, textStatus){
+                console.log(jqXHR, textStatus);
+                $('#output').text(textStatus);
+            },
+        });
+        //jQuery.post( url [, data ] [, success(data, textStatus, jqXHR) ] [, dataType ] )
+        /*$.post(
+            'https://api.github.com/gists',
+            JSON.stringify({
+                "description": "pergist-spike",
+                "public": false,
+                "files": {
+                    "data.txt": {
+                        "content": gistValue()
+                    }
+                }
+            }),
+            function(data, textStatus, jqXHR){
+                ;
+            },
+            'json');*/
+	});
+    
+	$('#read-button').click(function(){
+		console.log(
+		  'fetching gist "'
+		  +gistName()
+		  +'" with value "'
+		  +gistValue()
+		  +'"');
+	});
+    
+	$('#update-button').click(function(){
+		console.log(
+		  'updating gist "'
+		  +gistName()
+		  +'" with value "'
+		  +gistValue()
+		  +'"');
+	});
+    
+	$('#delete-button').click(function(){
+		console.log(
+		  'deleting gist "'
+		  +gistName()
+		  +'"');
+	});
 });
+
+function gistName() {
+    return $('input[name=gist-name]').val();
+}
+
+function gistValue() {
+    return $('textarea[name=gist-value]').val();
+}
 
 // from http://www.quirksmode.org/js/cookies.html:
 function createCookie(name,value,days) {
