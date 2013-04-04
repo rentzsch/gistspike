@@ -1,9 +1,11 @@
+var cookieName = 'gistSpike.oauth';
+
 $(document).ready(function(){
-    if (readCookie('oauthCookie')) {
-        // signed in
+    if (readCookie(cookieName)) {
+        console.log('signed in');
         $('#sign-in-button').hide();
     } else {
-        // signed out
+        console.log('signed out');
         $('#sign-out-button').hide();
     }
     
@@ -19,7 +21,7 @@ $(document).ready(function(){
 	});
     
 	$('#sign-out-button').click(function(){
-		eraseCookie('oauthCookie');
+		eraseCookie(cookieName);
 		window.location.reload();
 	});
 });
