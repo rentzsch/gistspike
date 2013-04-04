@@ -14,7 +14,7 @@ $(document).ready(function(){
         console.log('oauth code detected, storing '+oauthCode[1]);
         createCookie(cookieName, oauthCode[1]);
         // Remove 'code=' from the url:
-        window.location = window.location.origin + window.location.pathname;
+        //window.location = window.location.origin + window.location.pathname;
     }
     
 	$('#sign-in-button').click(function(){
