@@ -38,8 +38,9 @@ $(document).ready(function(){
                 'Accept': 'application/vnd.github.raw',
                 'Authorization': 'token '+readCookie(cookieName),
             },
-            //contentType: 'application/json',
-            data: {
+            contentType: 'json',
+            processData: false,
+            data: JSON.stringify({
                 'description': 'pergist-spike-'+gistName(),
                 'public': false,
                 'files': {
@@ -47,7 +48,7 @@ $(document).ready(function(){
                         'content': gistValue()
                     },
                 }
-            },
+            }),
             //--
             dataType: 'json',
             //cache: false, // not for POST
