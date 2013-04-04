@@ -11,7 +11,8 @@ $(document).ready(function(){
     
     var oauthCode = window.location.search.match(/code=(.+)/);
     if (oauthCode) {
-        createCookie('oauthCode', oauthCode[1]);
+        console.log('oauth code detected, storing '+oauthCode[1]);
+        createCookie(cookieName, oauthCode[1]);
         // Remove 'code=' from the url:
         window.location = window.location.origin + window.location.pathname;
     }
